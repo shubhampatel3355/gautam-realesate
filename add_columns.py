@@ -1,14 +1,14 @@
+import os
 import psycopg2
 from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
+from dotenv import load_dotenv
+
+load_dotenv()
 
 try:
-    conn = psycopg2.connect(
-        dbname="property_db",
-        user="postgres",
-        password="admin",
-        host="localhost",
-        port="5432",
-    )
+    # the environment variable is a full dsn url string
+    db_url = os.getenv("DATABASE_URL")
+    conn = psycopg2.connect(db_url)
     conn.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
     cursor = conn.cursor()
     cursor.execute(
