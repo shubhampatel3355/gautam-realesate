@@ -19,6 +19,7 @@ app.add_middleware(
         "http://localhost:5173",
         "http://127.0.0.1:5173",
         "http://localhost:3000",
+        "http://127.0.0.1:3000",
         "http://127.0.0.1:8000",
     ],
     allow_credentials=True,
@@ -45,6 +46,12 @@ def create_property(property: schemas.PropertyCreate, db: Session = Depends(get_
     db.add(db_property)
     db.commit()
     db.refresh(db_property)
+    
+    # Auto-generate BGM identifier
+    db_property.bgm_id = f"BGM-{db_property.id:04d}"
+    db.commit()
+    db.refresh(db_property)
+    
     return db_property
 
 

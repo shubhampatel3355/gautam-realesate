@@ -7,6 +7,7 @@ class Property(Base):
     __tablename__ = "properties"
 
     id = Column(Integer, primary_key=True, index=True)
+    bgm_id = Column(String, unique=True, index=True, nullable=True)
     title = Column(String, index=True)
     price = Column(String)
     category = Column(String)

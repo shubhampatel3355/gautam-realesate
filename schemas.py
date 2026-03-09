@@ -25,6 +25,7 @@ class PropertyCreate(BaseModel):
 
 class PropertyResponse(PropertyCreate):
     id: int
+    bgm_id: Optional[str] = None
     model_config = ConfigDict(from_attributes=True)
 
 
