@@ -60,7 +60,7 @@ def create_property(property: schemas.PropertyCreate, db: Session = Depends(get_
 
 
 @app.get("/properties/", response_model=List[schemas.PropertyResponse])
-def get_properties(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+def get_properties(skip: int = 0, limit: int = 1000, db: Session = Depends(get_db)):
     return db.query(models.Property).offset(skip).limit(limit).all()
 
 
