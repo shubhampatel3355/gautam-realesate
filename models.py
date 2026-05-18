@@ -49,3 +49,17 @@ class Profile(Base):
     phone_number = Column(String)
     bio = Column(Text)
     profile_picture_url = Column(String)
+
+class Visitor(Base):
+    __tablename__ = "visitors"
+
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String, index=True)
+    phone = Column(String)
+    interested_in = Column(String)  # 'Buy' or 'Sell'
+    property_type = Column(String)
+    budget_min = Column(String, nullable=True)
+    budget_max = Column(String, nullable=True)
+    description = Column(Text, nullable=True)
+    created_at_date = Column(String)
+    created_at_time = Column(String)

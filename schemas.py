@@ -43,3 +43,21 @@ class ProfileUpdate(ProfileBase):
 class ProfileResponse(ProfileBase):
     id: int
     model_config = ConfigDict(from_attributes=True)
+
+class VisitorBase(BaseModel):
+    name: str
+    phone: str
+    interested_in: Optional[str] = None
+    property_type: Optional[str] = None
+    budget_min: Optional[str] = None
+    budget_max: Optional[str] = None
+    description: Optional[str] = None
+    created_at_date: str
+    created_at_time: str
+
+class VisitorCreate(VisitorBase):
+    pass
+
+class VisitorResponse(VisitorBase):
+    id: int
+    model_config = ConfigDict(from_attributes=True)

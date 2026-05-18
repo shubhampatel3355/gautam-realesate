@@ -144,3 +144,27 @@ def resolve_url(url: str):
             return {"expanded_url": response.url}
     except Exception as e:
         return {"expanded_url": url, "error": str(e)}
+
+# ----------------- VISITOR ENDPOINTS -----------------
+
+@app.post("/visitors/", response_model=schemas.VisitorResponse, status_code=201)
+def create_visitor(visitor: schemas.VisitorCreate, db: Session = Depends(get_db)):
+    db_visitor = models.Visitor(**visitor.model_dump())
+    db.add(db_visitor)
+    db.commit()
+    db.refresh(db_visitor)
+    return db_visitor
+
+@app.get("/visitors/", response_model=List[schemas.VisitorResponse])
+def get_visitors(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+    visitors = db.query(models.Visitor).order_by(models.Visitor.id.desc()).offset(skip).limit(limit).all()
+    return visitors
+
+@app.delete("/visitors/{visitor_id}")
+def delete_visitor(visitor_id: int, db: Session = Depends(get_db)):
+    db_visitor = db.query(models.Visitor).filter(models.Visitor.id == visitor_id).first()
+    if db_visitor is None:
+        raise HTTPException(status_code=404, detail="Visitor not found")
+    db.delete(db_visitor)
+    db.commit()
+    return {"ok": True}
